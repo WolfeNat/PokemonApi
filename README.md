@@ -19,3 +19,6 @@ PS C:\Users\Natha\Documents\GitHub\PokemonApi>
 i got his error
 
 my stuff was not properly indented so fml
+ I pushed what i thought was a buynch but apparently i have to commit to main first
+
+ for a final cheff kiss since i had to abandon my idea is a pokemon data thing

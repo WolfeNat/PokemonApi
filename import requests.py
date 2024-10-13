@@ -131,13 +131,38 @@ def battle(pokemon1_name, pokemon2_name):
             print(f"{pokemon1_name} fainted! {pokemon2_name} wins!")
             break
 
+def fetch_pokemon_data(pokemon_name):
+    url = f"https://pokeapi.co/api/v2/pokemon/{pokemon_name.lower()}/"
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        name = data['name']
+        height = data['height']
+        weight = data['weight']
+        types = [t['type']['name'] for t in data['types']]
+        abilities = [a['ability']['name'] for a in data['abilities']]
+        stats = {stat['stat']['name']: stat['base_stat'] for stat in data['stats']}
+        
+        print(f"\nName: {name.title()}")
+        print(f"Height: {height}")
+        print(f"Weight: {weight}")
+        print(f"Types: {', '.join(types).title()}")
+        print(f"Abilities: {', '.join(abilities).title()}")
+        print("Stats:")
+        for stat_name, stat_value in stats.items():
+            print(f"  {stat_name.title()}: {stat_value}")
+    else:
+        print(f"Failed to retrieve data for {pokemon_name}.")
+
 def menu():
     while True:
         print("\nMenu:")
         print("1. List first-gen Pokémon")
         print("2. Enter a Pokémon name to get evolution chain")
         print("3. Start a battle between two first-gen Pokémon")
-        print("4. Exit")
+        print("4. Fetch and display Pokémon data")
+        print("5. Exit")
         choice = input("Choose an option: ")
 
         if choice == '1':
@@ -150,6 +175,9 @@ def menu():
             pokemon2 = input("Enter the name of the second Pokémon: ")
             battle(pokemon1, pokemon2)
         elif choice == '4':
+            pokemon_name = input("Enter the name of the Pokémon: ")
+            fetch_pokemon_data(pokemon_name)
+        elif choice == '5':
             print("Exiting...")
             break
         else:
